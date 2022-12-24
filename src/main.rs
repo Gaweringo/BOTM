@@ -213,7 +213,7 @@ impl eframe::App for MyApp {
             ui.horizontal(|ui| {
                 ui.heading("Configuration");
                 if ui.link("?").on_hover_text("Get help").clicked() {
-                    open::that("https://github.com/gaweringo/BOTM#Getting Started").ok();
+                    open::that("https://github.com/gaweringo/BOTM#-getting-started-").ok();
                 };
             });
             ui.group(|ui| {
