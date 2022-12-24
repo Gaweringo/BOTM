@@ -8,8 +8,8 @@
 
 <div align="center">
 
-[![Status](https://img.shields.io/github/v/release/gaweringo/BOTM?display_name=tag&include_prereleases.svg)](https://github.com/gaweringo/BOTM/releases)
-[![GitHub Issues](https://img.shields.io/github/issues/gaweringo/BOTM.svg)](https://github.com/gaweringo/BOTM/issues)
+[![Status](https://img.shields.io/github/v/release/Gaweringo/BOTM?display_name=tag&include_prereleases.svg)](https://github.com/Gaweringo/BOTM/releases)
+[![GitHub Issues](https://img.shields.io/github/issues/Gaweringo/BOTM.svg)](https://github.com/Gaweringo/BOTM/issues)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
