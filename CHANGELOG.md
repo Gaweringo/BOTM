@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.2] - 2022-12-24
+
+[a0efffb](https://github.com/Gaweringo/BOTM/commit/a0efffb870e23b9aae5817a06cd3a6dd80afd3be)...[17d266c](https://github.com/Gaweringo/BOTM/commit/17d266c70bd86c42a45919e09b882c02df4f16c5)
+
+### Bug Fixes
+
+- The configuration from the gui is now used ([17d266c](https://github.com/Gaweringo/BOTM/commit/17d266c70bd86c42a45919e09b882c02df4f16c5))
+
+### Documentation
+
+- Fix readme shields.io badges ([4ab3a80](https://github.com/Gaweringo/BOTM/commit/4ab3a803b1e055b6f9dfda804df1078fa13558cd))
+- Fix spelling mistake in readme ([20771ff](https://github.com/Gaweringo/BOTM/commit/20771ffb8534082b377f875652565b0aaf1c3926))
+
+### Ci
+
+- Remove some repetative confirmations from just release ([93ddf79](https://github.com/Gaweringo/BOTM/commit/93ddf79f13b064a69e135142f965b1cbc25715f4))
+- Add just add-build to build and upload the binary ([81c231f](https://github.com/Gaweringo/BOTM/commit/81c231fd630360b4cb21e2e724ceb22bee0c1c07))
+
 ## [0.1.1] - 2022-12-24
 
 ### Bug Fixes
@@ -11,6 +29,10 @@ All notable changes to this project will be documented in this file.
 ### Features
 
 - First working version. ([38ec184](https://github.com/Gaweringo/BOTM/commit/38ec184bbb859c2d5f96423f5075dd9739a593c7))
+
+### Miscellaneous Tasks
+
+- Release ([a0efffb](https://github.com/Gaweringo/BOTM/commit/a0efffb870e23b9aae5817a06cd3a6dd80afd3be))
 
 ### Ci
 
