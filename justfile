@@ -14,3 +14,7 @@ release LEVEL:
     cargo release tag -x --no-confirm
     # standard-version --skip.tag --dry-run
     # git-cliff -o CHANGELOG.md
+
+add-build TAG:
+    cargo b --release
+    gh release upload {{TAG}} .\target\release\botm.exe
