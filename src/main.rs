@@ -262,6 +262,8 @@ fn generate_botm(
     creds: Option<Credentials>,
     port: Option<i32>,
 ) -> color_eyre::Result<()> {
+    log::info!("Running generate_botm()");
+
     log::debug!("Got args: {args:?}");
     log::debug!("Got creds: {creds:?}");
     log::debug!("Got port: {port:?}");
@@ -279,12 +281,22 @@ fn generate_botm(
         token_cached: true,
         ..Default::default()
     };
-    log::info!("Getting stuff from env");
 
-    let creds = creds.unwrap_or(Credentials::from_env().wrap_err("Could not get creds from env")?);
+    log::debug!("Setting up spotify struct");
+
+    // let creds = creds.unwrap_or_else(|| Credentials::from_env().wrap_err("Could not get creds from env")?);
+    let creds = if let Some(creds) = creds {
+        creds
+    } else {
+        log::debug!("No creds specified, reading from env");
+        Credentials::from_env()
+            .wrap_err("Got no credentials (id, secret), tried reading from env")?
+    };
+
     // let oauth = OAuth::from_env(scopes).wrap_err("Could not get OAuth from env")?;
+    let port = port.unwrap_or(8081);
     let oauth = OAuth {
-        redirect_uri: format!("http://localhost:{}", port.unwrap_or(8081)),
+        redirect_uri: format!("http://localhost:{}", port),
         scopes,
         ..Default::default()
     };
@@ -318,7 +330,7 @@ fn generate_botm(
                 }
             }
             _ => {
-                let code = prompt_user(&spotify, url)?;
+                let code = prompt_user(&spotify, url, port)?;
                 spotify.request_token(&code)?;
             }
         }
@@ -380,8 +392,12 @@ fn generate_botm(
     Ok(())
 }
 
-fn prompt_user(spotify: &AuthCodeSpotify, url: &str) -> Result<String, color_eyre::Report> {
-    let ref _this = *spotify;
+fn prompt_user(
+    spotify: &AuthCodeSpotify,
+    url: &str,
+    port: i32,
+) -> Result<String, color_eyre::Report> {
+    let _this = spotify;
     let url = url;
     use rspotify::ClientError;
     log::info!("Opening brower with auth URL");
@@ -395,7 +411,8 @@ fn prompt_user(spotify: &AuthCodeSpotify, url: &str) -> Result<String, color_eyr
     }
     log::info!("Prompting user for code");
 
-    let local = Url::parse(env::var("RSPOTIFY_REDIRECT_URI")?.as_str())?;
+    // let local = Url::parse(env::var("RSPOTIFY_REDIRECT_URI")?.as_str())?;
+    let local = Url::parse(&format!("http://localhost:{}", port))?;
     dbg!(&local.to_string());
 
     // let loc_v4: SocketAddrV4 = local[0];
