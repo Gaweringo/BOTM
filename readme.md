@@ -41,7 +41,7 @@ This program lets you create a playlist with your top songs of the past four wee
 
 Create a new app on [the Spotify developer dashboard](https://developer.spotify.com/dashboard/). Give it a name like BOTM so, you can remember what the app is for.
 
-After you created the app you should see the its overview with the Client ID:
+After you created the app you should see its overview with the Client ID:
 ![Image showing where the Client ID can be found](assets/Client%20ID.png)
 
 And under that there is the button to reveal your client secret.
