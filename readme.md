@@ -49,7 +49,7 @@ And under that there is the button to reveal your client secret.
 Next, go to `EDIT SETTINGS` on the overview page:
 ![Showing where the edit settings button is located](assets/Edit%20settings.png)
 
-There add `https://localhost:8081` (The number after the `:` is the port and has to be the same that is set in the application itself) as a Redirect URI (Remember to click ADD):
+There add `http://localhost:8081` (The number after the `:` is the port and has to be the same that is set in the application itself) as a Redirect URI (Remember to click ADD and SAVE):
 ![Showing how to add the redirect URI](assets/Add%20callback%20url.png)
 
 ### Installing
