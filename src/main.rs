@@ -1,7 +1,7 @@
 use chrono::Datelike;
 // #![windows_subsystem = "windows"]
 use clap::Parser;
-use color_eyre::eyre::ContextCompat;
+use color_eyre::eyre::{ContextCompat, bail};
 use dotenvy::dotenv;
 use eframe::IconData;
 use egui::TextBuffer;
@@ -51,7 +51,15 @@ fn main() -> color_eyre::Result<()> {
     };
 
     if args.no_gui {
-        generate_botm(Default::default(), None, None)?;
+        if !std::path::Path::new("config.json").exists() {
+            eprintln!("NO CONFIG FILE FOUND!\nplease set config in gui");
+            bail!("config.json could not be found");
+        }
+        let config: Configuration =
+            serde_json::from_str(&fs::read_to_string("config.json").unwrap_or_default())
+                .unwrap_or_default();
+        let creds = Credentials::new(&config.client_id, &config.client_secret);
+        generate_botm(args, Some(creds), Some(config.port))?;
     } else {
         eframe::run_native(
             "BOTM",
@@ -108,6 +116,9 @@ impl From<String> for ClientId {
 
 impl eframe::App for MyApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        self.config.client_id = self.config.client_id.trim().to_owned();
+        self.config.client_secret = self.config.client_secret.trim().to_owned();
+
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.vertical_centered(|ui| {
                 ui.heading("BOTM");
@@ -370,6 +381,8 @@ fn generate_botm(
     );
 
     log::info!("Creating Playlist");
+    log::debug!("Playlist name: {}", playlist_name);
+    log::debug!("Playlist description: {}", description);
     let playlist =
         spotify.user_playlist_create(&id, &playlist_name, None, None, Some(&description))?;
 
