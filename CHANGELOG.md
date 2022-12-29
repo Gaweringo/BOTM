@@ -2,9 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.3] - 2022-12-29
+
+[4932d59](https://github.com/Gaweringo/BOTM/commit/4932d59c412815c71878f0d1a62115fbcc4bf547)...[a024e68](https://github.com/Gaweringo/BOTM/commit/a024e68245154e1e10e69da19cec32dffcdb804c)
+
+### Bug Fixes
+
+- Change title of response.html to BOTM from spotify-tui ([824180a](https://github.com/Gaweringo/BOTM/commit/824180a6ba45094f6de00f0ff1102084744da584))
+- Change screenshot for redirect uri to use http ([c4017fe](https://github.com/Gaweringo/BOTM/commit/c4017fe4d03228325f319204881ab56a9768a630)), Fixes #[1](https://github.com/Gaweringo/BOTM/issues/1)
+- --no-gui panicing if no .env is present (now use config.json) ([a024e68](https://github.com/Gaweringo/BOTM/commit/a024e68245154e1e10e69da19cec32dffcdb804c))
+
+### Documentation
+
+- Change https to http and add info to save in readme ([1e878d2](https://github.com/Gaweringo/BOTM/commit/1e878d27741ad0bac6dd9a60317c4ab95bf31c99))
+
 ## [0.1.2] - 2022-12-24
 
-[a0efffb](https://github.com/Gaweringo/BOTM/commit/a0efffb870e23b9aae5817a06cd3a6dd80afd3be)...[17d266c](https://github.com/Gaweringo/BOTM/commit/17d266c70bd86c42a45919e09b882c02df4f16c5)
+[a0efffb](https://github.com/Gaweringo/BOTM/commit/a0efffb870e23b9aae5817a06cd3a6dd80afd3be)...[4932d59](https://github.com/Gaweringo/BOTM/commit/4932d59c412815c71878f0d1a62115fbcc4bf547)
 
 ### Bug Fixes
 
@@ -14,6 +28,10 @@ All notable changes to this project will be documented in this file.
 
 - Fix readme shields.io badges ([4ab3a80](https://github.com/Gaweringo/BOTM/commit/4ab3a803b1e055b6f9dfda804df1078fa13558cd))
 - Fix spelling mistake in readme ([20771ff](https://github.com/Gaweringo/BOTM/commit/20771ffb8534082b377f875652565b0aaf1c3926))
+
+### Miscellaneous Tasks
+
+- Release ([4932d59](https://github.com/Gaweringo/BOTM/commit/4932d59c412815c71878f0d1a62115fbcc4bf547))
 
 ### Ci
 
