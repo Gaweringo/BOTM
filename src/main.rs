@@ -1,5 +1,5 @@
-use chrono::Datelike;
 // #![windows_subsystem = "windows"]
+use chrono::Datelike;
 use clap::Parser;
 use color_eyre::eyre::{ContextCompat, bail};
 use dotenvy::dotenv;
@@ -127,7 +127,21 @@ impl eframe::App for MyApp {
 
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.vertical_centered(|ui| {
-                ui.heading("BOTM");
+                ui.columns(3, |columns| {
+                    columns[1].vertical_centered(|ui| ui.heading("BOTM"));
+                    // ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                    columns[2].horizontal_top(|ui| {
+                        ui.add_space(55.0);
+                        if ui
+                            .link(format!("v{}", version::version!()))
+                            .clicked()
+                        {
+                            open::that("https://github.com/gaweringo/botm/releases/latest");
+                        }
+                    });
+                    // });
+                });
+
                 ui.add_enabled_ui(!self.config.client_id.is_empty(), |ui| {
                     if ui
                         .button("Generate BOTM")
@@ -224,6 +238,8 @@ impl eframe::App for MyApp {
                     } else {
                         ui.spinner();
                     }
+                } else {
+                    ui.add_space(10.0);
                 }
             });
             ui.add_space(8.0);
