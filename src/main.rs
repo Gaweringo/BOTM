@@ -7,6 +7,7 @@ use eframe::IconData;
 use egui::TextBuffer;
 
 use itertools::Itertools;
+use notify_rust::Notification;
 use poll_promise::Promise;
 use rspotify::{
     model::TimeRange,
@@ -60,6 +61,11 @@ fn main() -> color_eyre::Result<()> {
                 .unwrap_or_default();
         let creds = Credentials::new(&config.client_id, &config.client_secret);
         generate_botm(args, Some(creds), Some(config.port))?;
+        Notification::new()
+            .summary("Nice BOTM you got there!")
+            .body("Generated a new BOTM")
+            .appname("BOTM")
+            .show()?;
     } else {
         eframe::run_native(
             "BOTM",
