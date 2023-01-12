@@ -1,10 +1,11 @@
+use bangers_of_the_month::{check_config, ConfigError};
 // #![windows_subsystem = "windows"]
 use chrono::Datelike;
 use clap::Parser;
-use color_eyre::eyre::{ContextCompat, bail};
+use color_eyre::eyre::{bail, ContextCompat};
 use dotenvy::dotenv;
 use eframe::IconData;
-use egui::TextBuffer;
+use egui::{TextBuffer, Color32};
 
 use itertools::Itertools;
 use notify_rust::Notification;
@@ -26,7 +27,14 @@ use std::{
 use url::Url;
 
 fn main() -> color_eyre::Result<()> {
-    env_logger::init();
+    // env_logger::init();
+    #[cfg(not(debug_assertions))]
+    simple_logging::log_to_file("BOTM.log", log::LevelFilter::Debug)?;
+    #[cfg(debug_assertions)]
+    simple_logger::SimpleLogger::new()
+        .with_level(log::LevelFilter::Debug)
+        .init()?;
+
     dotenv().ok();
 
     let args = Args::parse();
@@ -91,6 +99,7 @@ struct MyApp {
     last_month: bool,
     promise: Option<Promise<String>>,
     config: Configuration,
+    config_status: Option<Result<(), ConfigError>>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Default)]
@@ -125,6 +134,8 @@ impl eframe::App for MyApp {
         self.config.client_id = self.config.client_id.trim().to_owned();
         self.config.client_secret = self.config.client_secret.trim().to_owned();
 
+        let old_config = self.config.clone();
+
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.vertical_centered(|ui| {
                 ui.columns(3, |columns| {
@@ -132,10 +143,7 @@ impl eframe::App for MyApp {
                     // ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                     columns[2].horizontal_top(|ui| {
                         ui.add_space(55.0);
-                        if ui
-                            .link(format!("v{}", version::version!()))
-                            .clicked()
-                        {
+                        if ui.link(format!("v{}", version::version!())).clicked() {
                             open::that("https://github.com/gaweringo/botm/releases/latest");
                         }
                     });
@@ -273,13 +281,43 @@ impl eframe::App for MyApp {
                     });
 
                     ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                        if ui.button("Test config").clicked() {
-                            log::info!("Test config pressed");
+                        if let Some(status) = &self.config_status {
+                            if let Err(status) = status {
+                                let status_info = match status {
+                                    ConfigError::BadClientId => "Bad Client ID",
+                                    ConfigError::BadClientSecret => "Bad Client Secret",
+                                    ConfigError::BadPort { source, port } => "Port not useable",
+                                    ConfigError::ClientError(_) => "Internal error",
+                                    ConfigError::ReqwestError(_) => "Network error",
+                                    ConfigError::Unknown => "Unknown error",
+                                };
+                                ui.label(egui::RichText::new(status_info).color(Color32::DARK_RED));
+                            } else {
+                                ui.label("All good!");
+                            }
+                        } else if ui.button("Test config").clicked() {
+                            let config_res = check_config(
+                                &self.config.client_id,
+                                &self.config.client_secret,
+                                self.config.port,
+                            );
+
+                            if let Err(err) = &config_res {
+                                log::warn!("Config not satisfactory: {:?}", err);
+                            } else {
+                                log::info!("The config is good");
+                            }
+
+                            self.config_status = Some(config_res);
                         }
                     });
                 });
             });
         });
+
+        if old_config != self.config {
+            self.config_status = None;
+        }
     }
 
     fn on_exit(&mut self, _gl: Option<&eframe::glow::Context>) {
@@ -529,7 +567,7 @@ struct Args {
     pub last_month: bool,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
 struct Configuration {
     client_id: String,
     client_secret: String,

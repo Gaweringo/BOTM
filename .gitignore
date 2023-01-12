@@ -28,3 +28,4 @@ Cargo.lock
 # generated config.json while testing the app
 config.json
 .spotify_token_cache.json
+BOTM.log
