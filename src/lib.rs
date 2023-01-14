@@ -30,20 +30,6 @@ pub enum ConfigError {
 pub fn check_config(client_id: &str, client_secret: &str, port: i32) -> Result<(), ConfigError> {
     log::info!("Checking config");
 
-    // May require the `env-file` feature enabled if the environment variables
-    // aren't configured manually.
-    let config = Config {
-        // token_refreshing: true,
-        // token_cached: true,
-        ..Default::default()
-    };
-
-    let creds = Credentials::new(client_id, client_secret);
-
-    let mut spotify = rspotify::ClientCredsSpotify::with_config(creds, config);
-    // spotify.request_token()?;
-
-    // TODO: Find out if client id or client secret is wrong
     let res = reqwest::blocking::Client::new()
         .post("https://accounts.spotify.com/api/token")
         .header(
@@ -56,18 +42,18 @@ pub fn check_config(client_id: &str, client_secret: &str, port: i32) -> Result<(
         .form(&HashMap::from([("grant_type", "client_credentials")]))
         .send()?;
 
-    // info!("Res text: {:?}", res.text());
-
     let res: TokenResponse = res.json()?;
 
-    log::info!("Res: {:#?}", res);
+    log::info!("Response: {:#?}", res);
 
     match res {
-        TokenResponse::ErrorResponse(ErrorResponse{error: _, error_description: err_des}) => match err_des.as_str() {
+        TokenResponse::ErrorResponse(ErrorResponse {
+            error: _,
+            error_description: err_des,
+        }) => match err_des.as_str() {
             "Invalid client" => return Err(ConfigError::BadClientId),
             "Invalid client secret" => return Err(ConfigError::BadClientSecret),
-            _ => return Err(ConfigError::Unknown)
-            
+            _ => return Err(ConfigError::Unknown),
         },
         TokenResponse::SuccessfulResponse(_) => {}
     }

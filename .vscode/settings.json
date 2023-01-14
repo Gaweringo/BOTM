@@ -3,6 +3,7 @@
         "BOTM",
         "dotenv",
         "eframe",
-        "egui"
+        "egui",
+        "reqwest"
     ]
 }
