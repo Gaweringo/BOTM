@@ -1,6 +1,6 @@
 [package]
 name = "bangers-of-the-month"
-version = "0.1.3"
+version = "0.1.4-alpha.1"
 edition = "2021"
 
 [[bin]]

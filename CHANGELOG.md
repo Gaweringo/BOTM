@@ -2,9 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.4-alpha.1] - 2023-01-14
+
+[d54f1ba](https://github.com/Gaweringo/BOTM/commit/d54f1baa55fe9ac7de14a07b978c3eaf418178ba)...[2d08fa5](https://github.com/Gaweringo/BOTM/commit/2d08fa5b70e428344536ac6e118aed789751bf48)
+
+### Features
+
+- Add notification to --no-gui to show that the playlist was created. ([1ab9475](https://github.com/Gaweringo/BOTM/commit/1ab9475a49115be4e5ab0f124a859767b47a5ed4))
+- Display current version in gui with link to releases ([daeb98b](https://github.com/Gaweringo/BOTM/commit/daeb98b35d93de29bd2e36289bc3901ad8fb50fc))
+- Test config now actually test the config. ([8eb7675](https://github.com/Gaweringo/BOTM/commit/8eb7675c243576d8dc5ff669ba03ace735c63203))
+
+### Styling
+
+- Remove some unused code in lib ([8d4ef46](https://github.com/Gaweringo/BOTM/commit/8d4ef4690c7e041c09fbbd38c432b7a7ae1f4350))
+
+### Ci
+
+- Create automatic releasees as draft ([f93d880](https://github.com/Gaweringo/BOTM/commit/f93d8806666cc9e6b4e959e2f5de23d0f8250649))
+
 ## [0.1.3] - 2022-12-29
 
-[4932d59](https://github.com/Gaweringo/BOTM/commit/4932d59c412815c71878f0d1a62115fbcc4bf547)...[a024e68](https://github.com/Gaweringo/BOTM/commit/a024e68245154e1e10e69da19cec32dffcdb804c)
+[4932d59](https://github.com/Gaweringo/BOTM/commit/4932d59c412815c71878f0d1a62115fbcc4bf547)...[d54f1ba](https://github.com/Gaweringo/BOTM/commit/d54f1baa55fe9ac7de14a07b978c3eaf418178ba)
 
 ### Bug Fixes
 
@@ -15,6 +33,10 @@ All notable changes to this project will be documented in this file.
 ### Documentation
 
 - Change https to http and add info to save in readme ([1e878d2](https://github.com/Gaweringo/BOTM/commit/1e878d27741ad0bac6dd9a60317c4ab95bf31c99))
+
+### Miscellaneous Tasks
+
+- Release ([d54f1ba](https://github.com/Gaweringo/BOTM/commit/d54f1baa55fe9ac7de14a07b978c3eaf418178ba))
 
 ## [0.1.2] - 2022-12-24
 
